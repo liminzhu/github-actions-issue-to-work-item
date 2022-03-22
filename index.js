@@ -146,8 +146,7 @@ async function calculateIssueMetrics(vm) {
 		reactionCount = 0,
 		commentCount = comments.length
 	]
-	console.log("Metrics: " + JSON.stringify(metrics));
-	for (let comment in comments) {
+	for (let comment of comments) {
 		console.log("comment: " + JSON.stringify(comment));
 		uniqueUsers.add(comment.user.id);
 		reactionCount += comment.reactions.total_count;
