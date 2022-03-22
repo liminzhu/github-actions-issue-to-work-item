@@ -39,7 +39,7 @@ async function main() {
 		  });
 		console.log("Comments: " + JSON.stringify(comments));
 		const metrics = processComments(comments);
-		console.log(comments);
+		console.log("Metrics: " + JSON.stringify(metrics));
 
 		/*
 		// todo: validate we have all the right inputs
