@@ -30,7 +30,7 @@ async function main() {
 			vm = getValuesFromPayload(github.context.payload, env);
 		}
 
-		const metrics = calculateIssueMetrics(vm);
+		const metrics = await calculateIssueMetrics(vm);
 
 		/*
 		// todo: validate we have all the right inputs
@@ -133,13 +133,13 @@ async function main() {
 	}
 }
 
-function calculateIssueMetrics(vm) {
+async function calculateIssueMetrics(vm) {
 	const octokit = new github.GitHub(vm.env.ghToken);
-		const { data: comments } = await octokit.issues.listComments({
-			onwer: vm.organization,
-			repo: vm.repo_name,
-			issue_number: vm.number,
-		  });
+	const { data: comments } = await octokit.issues.listComments({
+		onwer: vm.organization,
+		repo: vm.repo_name,
+		issue_number: vm.number,
+		});
 	console.log("Comments: " + JSON.stringify(comments));
 	let metrics = [
 		uniqueUsers = new Set(),
