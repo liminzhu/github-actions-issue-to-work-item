@@ -30,16 +30,7 @@ async function main() {
 			vm = getValuesFromPayload(github.context.payload, env);
 		}
 
-		vm.issue = github.context.issue;
-		console.log("Context: " + JSON.stringify(vm));
-		const octokit = new github.GitHub(vm.env.ghToken);
-		const comments = await octokit.issues.listComments({
-			...github.context.repo,
-			issue_number: github.context.issue.number,
-		  });
-		console.log("Comments: " + JSON.stringify(comments));
-		const metrics = calculateIssueMetrics(comments);
-		console.log("Metrics: " + JSON.stringify(metrics));
+		const metrics = calculateIssueMetrics(vm);
 
 		/*
 		// todo: validate we have all the right inputs
@@ -142,8 +133,15 @@ async function main() {
 	}
 }
 
-function calculateIssueMetrics(comments) {
-	let results = [
+function calculateIssueMetrics(vm) {
+	const octokit = new github.GitHub(vm.env.ghToken);
+		const { data: comments } = await octokit.issues.listComments({
+			onwer: vm.organization,
+			repo: vm.repo_name,
+			issue_number: vm.number,
+		  });
+	console.log("Comments: " + JSON.stringify(comments));
+	let metrics = [
 		uniqueUsers = new Set(),
 		reactionCount = 0,
 		commentCount = comments.length
@@ -152,8 +150,9 @@ function calculateIssueMetrics(comments) {
 		uniqueUsers.add(comment.user.id);
 		reactionCount += comment.reactions.total_count;
 	}
-	results.uniqueUserCount = results.uniqueUsers.size;
-	return results;
+	metrics.uniqueUserCount = metrics.uniqueUsers.size;
+	console.log("Metrics: " + JSON.stringify(metrics));
+	return metrics;
 }
 
 function formatTitle(vm) {
