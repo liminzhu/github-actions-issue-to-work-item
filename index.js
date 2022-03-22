@@ -13,7 +13,6 @@ async function main() {
 		const env = process.env;
 
 		let vm = [];
-
 		if (debug) {
 			// manually set when debugging
 			env.ado_organization = "{organization}";
@@ -33,6 +32,7 @@ async function main() {
 
 		console.log("Context: " + vm);
 
+		/*
 		// todo: validate we have all the right inputs
 
 		// go check to see if work item already exists in azure devops or not
@@ -126,6 +126,7 @@ async function main() {
 			console.log(`Work item successfully created or updated: ${workItem.id}`);
 			core.setOutput(`id`, `${workItem.id}`);
 		}
+		*/
 	} catch (error) {
 		console.log("Error: " + error);
 		core.setFailed();
