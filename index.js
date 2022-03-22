@@ -30,7 +30,13 @@ async function main() {
 			vm = getValuesFromPayload(github.context.payload, env);
 		}
 
+		vm.issue = github.context.issue;
 		console.log("Context: " + JSON.stringify(vm));
+		const comments = await octokit.issues.listComments({
+			...github.context.repo,
+			issue_number: github.context.issue.number,
+		  });
+		console.log("Comments: " + JSON.stringify(comments));
 
 		/*
 		// todo: validate we have all the right inputs
