@@ -141,15 +141,15 @@ async function calculateIssueMetrics(vm) {
 		issue_number: vm.number,
 		});
 	console.log("Comments: " + JSON.stringify(comments));
-	let metrics = [
-		uniqueUsers = new Set(),
-		reactionCount = 0,
-		commentCount = comments.length
-	]
+	let metrics = {
+		uniqueUsers: new Set(),
+		reactionCount: 0,
+		commentCount: comments.length
+	}
 	for (let comment of comments) {
 		console.log("comment: " + JSON.stringify(comment));
-		uniqueUsers.add(comment.user.id);
-		reactionCount += comment.reactions.total_count;
+		metrics.uniqueUsers.add(comment.user.id);
+		metrics.reactionCount += comment.reactions.total_count;
 	}
 	metrics.uniqueUserCount = metrics.uniqueUsers.size;
 	console.log("Metrics: " + JSON.stringify(metrics));
