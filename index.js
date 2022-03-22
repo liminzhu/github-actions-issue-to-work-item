@@ -38,7 +38,7 @@ async function main() {
 			issue_number: github.context.issue.number,
 		  });
 		console.log("Comments: " + JSON.stringify(comments));
-		const metrics = processComments(comments);
+		const metrics = calculateIssueMetrics(comments);
 		console.log("Metrics: " + JSON.stringify(metrics));
 
 		/*
@@ -142,7 +142,7 @@ async function main() {
 	}
 }
 
-function processComments(comments) {
+function calculateIssueMetrics(comments) {
 	let results = [
 		uniqueUsers = new Set(),
 		reactionCount = 0,
