@@ -30,7 +30,7 @@ async function main() {
 			vm = getValuesFromPayload(github.context.payload, env);
 		}
 
-		console.log("Context: " + vm);
+		console.log("Context: " + JSON.stringify(vm));
 
 		/*
 		// todo: validate we have all the right inputs
