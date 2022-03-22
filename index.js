@@ -136,8 +136,8 @@ async function main() {
 async function calculateIssueMetrics(vm) {
 	const octokit = new github.GitHub(vm.env.ghToken);
 	const { data: comments } = await octokit.issues.listComments({
-		onwer: vm.organization,
-		repo: vm.repo_name,
+		owner: vm.owner,
+		repo: vm.repository,
 		issue_number: vm.number,
 		});
 	console.log("Comments: " + JSON.stringify(comments));
