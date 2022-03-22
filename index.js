@@ -32,11 +32,14 @@ async function main() {
 
 		vm.issue = github.context.issue;
 		console.log("Context: " + JSON.stringify(vm));
+		const octokit = new github.GitHub(vm.env.ghToken);
 		const comments = await octokit.issues.listComments({
 			...github.context.repo,
 			issue_number: github.context.issue.number,
 		  });
 		console.log("Comments: " + JSON.stringify(comments));
+		const metrics = processComments(comments);
+		console.log(comments);
 
 		/*
 		// todo: validate we have all the right inputs
@@ -137,6 +140,20 @@ async function main() {
 		console.log("Error: " + error);
 		core.setFailed();
 	}
+}
+
+function processComments(comments) {
+	let results = [
+		uniqueUsers = new Set(),
+		reactionCount = 0,
+		commentCount = comments.length
+	]
+	for (let comment in comments) {
+		uniqueUsers.add(comment.user.id);
+		reactionCount += comment.reactions.total_count;
+	}
+	results.uniqueUserCount = results.uniqueUsers.size;
+	return results;
 }
 
 function formatTitle(vm) {
